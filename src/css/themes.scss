@@ -1,0 +1,62 @@
+// Reference for color themes
+
+// Warm Duvet
+// https://coolors.co/ddfff7-93e1d8-ffa69e-aa4465-462255
+// --primary-color: #FFA69E;
+// --secondary-color: #462255;
+// --danger-color: #AA4465;
+// --active-color: #35C0B0;
+
+.warm-duvet {
+  --primary-color: #FFA69E;
+  --secondary-color: #462255;
+  --danger-color: #AA4465;
+  --active-color: #35C0B0;
+}
+
+// Deep Blue
+// https://coolors.co/34f6f2-78e3fd-d1f5ff-eef8ff-7d53de
+
+.deep-blue {
+  --primary-color: #b0c6fd;
+  --secondary-color: #3f2b96;
+  --danger-color: #de5371;
+  --active-color: #70bcdf;
+}
+
+.silk {
+  --primary-color: #BDBFDB;
+  --secondary-color: #59336e;
+  --danger-color: #7e343e;
+  --active-color: #876bb6;
+}
+
+.monochrome {
+  --primary-color: #D8D8D8;
+  --secondary-color: #2E2E2E;
+  --danger-color: #5c3030;
+  --active-color: #818181;
+}
+
+.monochrome img {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.cotton-candy {
+  --primary-color: #ffb0b8;
+  --secondary-color: #89216B;
+  --danger-color: #b54a4a;
+  --active-color: #829bf0;
+}
+
+// Pastel
+// https://coolors.co/8fd694-7dba84-77ad78-6f8f72-504b43
+// --secondary-color: #506b64;
+
+.pastel {
+  --primary-color: #a0ecdd;
+  --secondary-color: #117e68;
+  --danger-color: #ad4848;
+  --active-color: #37a37a;
+}

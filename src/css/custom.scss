@@ -1,0 +1,217 @@
+// Definitions
+$packr_popup_width: 360px;
+$packr_popup_height: 560px;
+$packr_header_height: 100px;
+$packr_footer_height: 70px;
+$packr_pack_button_height: 50px;
+$packr_item_section_height: $packr_popup_height - $packr_header_height - $packr_footer_height;
+$packr_item_height: 100px;
+
+// Popup Size
+html {
+  width: $packr_popup_width !important;
+  height: $packr_popup_height !important;
+}
+
+// Body
+.packr-container {
+  // height: $packr_popup_height;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  // z-index: 10;
+  background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  transition: background 1000ms linear;
+}
+
+// Header
+.packr-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: $packr_header_height;
+
+  z-index: 1;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.20);
+}
+
+// Footer
+.packr-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  bottom: 0;
+
+  height: $packr_footer_height;
+}
+
+// HomePage
+.packr-button {
+  width: 100%;
+  height: $packr_pack_button_height;
+
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0,0,0,0.10);
+
+  z-index: 2;
+}
+
+.packr-button:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.16);
+}
+
+.packr-spinner {
+  margin-top: 0.5em;
+}
+
+.packr-no-pack-notice {
+  position: absolute;
+  top: $packr_popup_height / 3;
+  user-select: none;
+
+  width: 100%;
+
+  text-align: center;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.packr-item-group {
+  width: 100%;
+  max-height: $packr_item_section_height;
+
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+  border-radius: 0;
+}
+
+.packr-item-group:hover {
+  overflow-y: overlay !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+@keyframes delete-packr-item {
+  from {left: 0%; opacity: 1;}
+  to {left: 100%; opacity: 0.2;}
+}
+
+.deleted-item {
+  animation-name: delete-packr-item;
+  animation-duration: 0.4s;
+  animation-timing-function: ease;
+  left: 100%;
+}
+
+.deleted-item * {
+  cursor: default !important;
+}
+
+.settings-icon {
+  color: var(--primary-color);
+  font-size: x-large;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.settings-icon:hover {
+  transform: rotate(60deg);
+}
+
+@keyframes settins-icon-spin {
+  from{ transform: rotate(0deg); color: var(--primary-color); }
+  to{ transform: rotate(90deg); color: var(--primary-color); }
+}
+
+.settings-icon-spin svg {
+  animation-name: settins-icon-spin;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+
+  transform: rotate(90deg);
+}
+
+// PackrItem Component
+.packr-item {
+  user-select: none;
+
+  width: 100% !important;
+  height: $packr_item_height;
+  min-height: $packr_item_height;
+
+  margin-bottom: 5px;
+
+  background-color: rgba(255, 255, 255, 0.5);
+
+  font-size: 12pt;
+  white-space: nowrap;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.20);
+
+  transition: translateX(100%) ease-in-out;
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.selectable:hover {
+  background-color: rgba(255, 255, 255, 0.60);
+}
+
+.selectable:active:not(:focus-within) {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.packr-item-text-div {
+  width:  70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
+}
+
+.edit-item-icon {
+  cursor: pointer !important;
+}
+
+.delete-item-icon {
+  cursor: pointer !important;
+}
+
+.bookmark-item-icon {
+  cursor: pointer !important;
+}
+
+.edit-item-icon:hover {
+  color: var(--active-color);
+}
+
+.delete-item-icon:hover {
+  color: var(--danger-color);
+}
+
+.packr-item-pill {
+  min-width: 11%;
+  font-size: 9pt;
+}
+
+.packr-item-pill:hover {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  cursor: pointer;
+}
+
+.packr-item-pill:active {
+  background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.back-arrow-icon {
+  position: absolute;
+  left: 7.5px;
+  top: 28px;
+  margin: 10px;
+  cursor: pointer;
+}

@@ -1,4 +1,8 @@
-# packr
+<h1 align="center">
+  <p align="center">Packr</p>
+  <a href="https://packr.dev"><img src="images/banner.png" alt="Packr" width="800"></a>
+</h1>
+
 
 ## Project setup
 ```
@@ -19,6 +23,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -1,15 +1,21 @@
 {
   "name": "packr",
-  "version": "0.1.0",
+  "description": "The best tab manager you've never used.",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service build --mode development --watch",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
   "dependencies": {
+    "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "p-limit": "^3.0.2",
+    "uuid": "^8.2.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.4.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -18,15 +24,20 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.14.1",
+    "sass": "^1.19.0",
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-browser-extension": "~0.24.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "webextensions": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/base",
       "eslint:recommended"
     ],
     "parserOptions": {
