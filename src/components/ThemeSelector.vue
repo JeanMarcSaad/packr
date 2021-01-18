@@ -1,14 +1,8 @@
 <template>
   <div class="theme-selector" :class="theme.class">
     <div
-        v-if="selected"
         class="theme-ball"
         :class="[selected?'selected':'']"
-        @click="selectTheme">
-    </div>
-    <div
-        v-else
-        class="theme-ball"
         @click="selectTheme">
     </div>
     <p class="theme-name">{{ theme.name }}</p>
@@ -21,7 +15,7 @@ import themesApi from "@/api/themes-api"
 export default {
     name: "ThemeSelector",
     props: {
-        theme: Object,
+        theme: Object
     },
     computed: {
         selected() {

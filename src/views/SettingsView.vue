@@ -87,7 +87,6 @@ export default {
   font-size: 13pt;
   text-decoration: underline;
   text-decoration-color: rgba(0,0,0,0.3);
-  text-underline-offset: 20px;
   text-underline-position: under;
 }
 </style>

@@ -24,7 +24,7 @@
             v-for="pack in packs"
             :pack="pack"
             :key="pack.id"
-          />  
+          />
         </ul>
       </b-col>
     </b-row>
