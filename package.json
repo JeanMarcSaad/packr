@@ -27,7 +27,7 @@
     "node-sass": "^7.0.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.2",
-    "vue-cli-plugin-browser-extension": "~0.24.2",
+    "vue-cli-plugin-browser-extension": "~0.25.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
