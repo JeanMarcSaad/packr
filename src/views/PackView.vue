@@ -3,11 +3,16 @@
     <b-row>
       <b-col cols="12" class="p-3 packr-header">
         <div class="pack-header">
-          <b-icon-arrow-left-circle
-            @click="goBack()"
-            class="back-arrow-icon"
-            font-scale="1.5"
-          />
+          <div class="back-button-wrapper" @click="goBack()">
+            <b-icon-arrow-left-circle
+              class="back-arrow-outline"
+              font-scale="1.5"
+            />
+            <b-icon-arrow-left-circle-fill
+              class="back-arrow-fill"
+              font-scale="1.5"
+            />
+          </div>
           <span class="packr-item-text">
             {{ pack.name }}
           </span>

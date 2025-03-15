@@ -71,7 +71,7 @@ html {
 
 .packr-no-pack-notice {
   position: absolute;
-  top: $packr_popup_height / 3;
+  top: calc($packr_popup_height / 3);
   user-select: none;
 
   width: 100%;
@@ -213,5 +213,48 @@ html {
   left: 7.5px;
   top: 28px;
   margin: 10px;
+}
+
+.back-button-wrapper {
+  position: absolute;
+  left: 7.5px;
+  top: 28px;
+  margin: 10px;
   cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-arrow-outline,
+.back-arrow-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-arrow-outline {
+  opacity: 1;
+}
+
+.back-arrow-fill {
+  opacity: 0;
+}
+
+.back-button-wrapper:hover {
+  .back-arrow-outline {
+    opacity: 0;
+  }
+
+  .back-arrow-fill {
+    opacity: 1;
+  }
 }

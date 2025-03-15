@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Packr Import</title>
+  <style>
+    /* Theme variables */
+    :root {
+      --primary-color: #FFA69E;
+      --secondary-color: #462255;
+      --danger-color: #AA4465;
+      --active-color: #35C0B0;
+    }
+
+    /* Theme classes */
+    .warm-duvet {
+      --primary-color: #FFA69E;
+      --secondary-color: #462255;
+      --danger-color: #AA4465;
+      --active-color: #35C0B0;
+    }
+
+    .deep-blue {
+      --primary-color: #b0c6fd;
+      --secondary-color: #3f2b96;
+      --danger-color: #de5371;
+      --active-color: #70bcdf;
+    }
+
+    .silk {
+      --primary-color: #BDBFDB;
+      --secondary-color: #59336e;
+      --danger-color: #7e343e;
+      --active-color: #876bb6;
+    }
+
+    .monochrome {
+      --primary-color: #D8D8D8;
+      --secondary-color: #2E2E2E;
+      --danger-color: #5c3030;
+      --active-color: #818181;
+    }
+
+    .cotton-candy {
+      --primary-color: #ffb0b8;
+      --secondary-color: #89216B;
+      --danger-color: #b54a4a;
+      --active-color: #829bf0;
+    }
+
+    .pastel {
+      --primary-color: #a0ecdd;
+      --secondary-color: #117e68;
+      --danger-color: #ad4848;
+      --active-color: #37a37a;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      transition: background 1000ms linear;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .import-container {
+      width: 90%;
+      max-width: 500px;
+      margin: 40px auto;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .import-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.20);
+    }
+
+    .back-button {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      padding: 0;
+      margin-right: 15px;
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+
+    .upload-area {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 3px dashed rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 25px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.20);
+    }
+
+    .upload-area:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .upload-area:active {
+      transform: translateY(0);
+    }
+
+    .upload-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .upload-text {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .upload-subtext {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+
+    .select-button {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 500;
+    }
+
+    .select-button:hover {
+      background-color: rgba(255, 255, 255, 0.35);
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    .status-message {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 15px;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success {
+      background-color: rgba(52, 199, 89, 0.2);
+      border: 1px solid rgba(52, 199, 89, 0.4);
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .error {
+      background-color: rgba(255, 59, 48, 0.2);
+      border: 1px solid rgba(255, 59, 48, 0.4);
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .info {
+      background-color: rgba(90, 200, 250, 0.2);
+      border: 1px solid rgba(90, 200, 250, 0.4);
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .close-btn {
+      align-self: center;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+
+    .close-btn:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .close-btn:active {
+      transform: scale(0.98);
+    }
+
+    footer {
+      display: none; /* Hide footer completely */
+    }
+
+    /* Loading animation */
+    .loading {
+      display: none;
+      margin: 20px auto;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body id="main-container">
+  <div class="import-container">
+    <div class="import-header">
+      <button class="back-button" id="back-button">←</button>
+      <h1 class="header-title">Import Packs</h1>
+    </div>
+
+    <div class="upload-area" id="upload-area">
+      <div class="upload-icon">📂</div>
+      <div class="upload-text">Click to select a JSON backup file</div>
+      <div class="upload-subtext">or drag and drop your file here</div>
+      <input type="file" id="file-input" accept=".json">
+      <button class="select-button">Select Backup File</button>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <div id="status-message" class="status-message"></div>
+
+    <button id="close-btn" class="close-btn">Close Window</button>
+  </div>
+
+  <!-- External JS file instead of inline script -->
+  <script src="import.js"></script>
+</body>
+</html>

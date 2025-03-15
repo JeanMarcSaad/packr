@@ -6,16 +6,22 @@
   >
     <div class="tab-favicon">
       <b-spinner
-        v-if="!showImg"
+        v-if="!showImg && !isLocalFile"
         variant="light"
         class="packr-spinner tab-favicon-spinner"
       />
+      <div v-if="isLocalFile" class="default-favicon">
+        <!-- Display a text placeholder for local files -->
+        <span>📄</span>
+      </div>
       <img
+        v-else
         :src="tab.favicon"
         width="15px"
         height="15px"
         draggable="false"
         @load="onImgLoad"
+        @error="onImgError"
       />
     </div>
     <div class="packr-item-text-div">
@@ -53,12 +59,19 @@ export default {
   },
   data: () => {
     return {
-      hasImgLoaded: false
+      hasImgLoaded: false,
+      hasImgError: false
     }
   },
   computed: {
+    isLocalFile() {
+      return this.tab.favicon && (
+        this.tab.favicon.startsWith('file://') || 
+        this.hasImgError
+      );
+    },
     showImg() {
-      return this.tab.favicon != "" && this.hasImgLoaded;
+      return this.tab.favicon != "" && this.hasImgLoaded && !this.isLocalFile;
     }
   },
   methods: {
@@ -77,6 +90,9 @@ export default {
     },
     onImgLoad() {
       this.hasImgLoaded = true;
+    },
+    onImgError() {
+      this.hasImgError = true;
     }
   }
 }
@@ -86,11 +102,23 @@ export default {
 .tab-favicon {
   min-width: 10%;
   max-width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tab-favicon-spinner {
   width: 20px;
   height: 20px;
+}
+
+.default-favicon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  font-size: 15px;
 }
 
 .tab-url {

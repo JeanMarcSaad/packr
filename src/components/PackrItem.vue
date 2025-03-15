@@ -82,8 +82,10 @@ export default {
   methods: {
     openPack() {
       if(this.openable) {
-        let tabs = this.pack.tabs;
-        chromeWindowsApi.openWindowWithTabs({tabs: tabs.map((tab) => tab.url)});
+        if (confirm(`Do you want to open "${this.pack.name}" pack?`)) {
+          let tabs = this.pack.tabs;
+          chromeWindowsApi.openWindowWithTabs({tabs: tabs.map((tab) => tab.url)});
+        }
       }
     },
     validatePackNameEdit() {

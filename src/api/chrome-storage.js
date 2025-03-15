@@ -1,22 +1,13 @@
-const getPacks = () => {
-  return new Promise((resolve) => {
-    chrome.storage.local.get(['packs'],(result) => {
-      resolve(result.packs?JSON.parse(result.packs):[]);
-    });
-  });
+const getPacks = async () => {
+  const result = await chrome.storage.local.get(['packs']);
+  return result.packs ? JSON.parse(result.packs) : [];
 }
 
-const getPack = (id) => {
-  return new Promise((resolve, reject) => {
-    getPacks()
-    .then((packs) => {
-      packs.forEach(pack => {
-        if(pack.id == id)
-          resolve(pack);
-      });
-      reject("Pack not found");
-    });
-  });
+const getPack = async (id) => {
+  const packs = await getPacks();
+  const pack = packs.find(pack => pack.id == id);
+  if (pack) return pack;
+  throw new Error("Pack not found");
 }
 
 const addPack = (pack) => {
@@ -84,7 +75,7 @@ const addTabs = (id, tabs) => {
     .then((pack) => {
       // TODO Use Set() for Pack tabs
       let urls = pack.tabs.map((tab) => tab.url);
-      
+
       tabs.forEach( (tab) => {
         if(!urls.includes(tab.url)) {
           pack.tabs.push(tab);
@@ -138,6 +129,124 @@ const resetPackr = () => {
   });
 }
 
+const exportPacks = () => {
+  return new Promise((resolve) => {
+    getPacks()
+    .then((packs) => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(packs));
+      const downloadAnchorNode = document.createElement('a');
+      downloadAnchorNode.setAttribute("href", dataStr);
+
+      // Create timestamp in format YYYY-MM-DD_HH-MM-SS
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const timestamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+
+      // Set the filename with timestamp
+      downloadAnchorNode.setAttribute("download", `packr_backup_${timestamp}.json`);
+
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+      resolve(true);
+    });
+  });
+}
+
+const importPacks = (fileContent) => {
+  return new Promise((resolve, reject) => {
+    try {
+      console.log("Import function started");
+      console.log("FileContent parameter:", fileContent);
+
+      // Get the actual content (the parameter itself is the content)
+      const content = fileContent;
+
+      // Check if content is empty
+      if (!content || content.trim() === '') {
+        console.error("Empty file content");
+        reject("Error: Empty file content");
+        return;
+      }
+
+      // Log the content for debugging
+      console.log("Content type:", typeof content);
+      console.log("Content first 100 chars:", content.substring(0, 100), "...");
+      console.log("Content length:", content.length);
+
+      // Parse the JSON
+      let packs;
+      try {
+        packs = JSON.parse(content);
+        console.log("JSON parsed successfully:", typeof packs);
+      } catch (parseError) {
+        console.error("JSON parse error:", parseError);
+        reject("Invalid JSON format in the backup file");
+        return;
+      }
+
+      // Validate the imported data structure
+      if (!Array.isArray(packs)) {
+        console.error("Data is not an array:", typeof packs);
+        reject("Invalid backup file format: data must be an array");
+        return;
+      }
+
+      console.log("Packs array length:", packs.length);
+
+      // Basic validation of pack structure
+      if (packs.length > 0) {
+        const invalidPacks = packs.filter(pack => !pack.id || !pack.name || !Array.isArray(pack.tabs));
+        if (invalidPacks.length > 0) {
+          console.error("Some packs have invalid structure:", invalidPacks.length);
+          reject("Invalid pack structure in the backup file");
+          return;
+        }
+      }
+
+      console.log("All packs validated successfully, saving to storage...");
+
+      // Save the imported packs
+      chrome.storage.local.set({packs: JSON.stringify(packs)}, () => {
+        if (chrome.runtime.lastError) {
+          console.error("Chrome storage error:", chrome.runtime.lastError);
+          reject("Failed to save imported packs: " + chrome.runtime.lastError.message);
+          return;
+        }
+
+        console.log("Import operation completed successfully, packs saved:", packs.length);
+
+        // Return the imported packs
+        resolve(packs);
+      });
+    } catch (e) {
+      console.error("General import error:", e);
+      reject("Failed to import packs: " + e.message);
+    }
+  });
+}
+
+const checkFirstRun = () => {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['v3_migrated'], (result) => {
+      resolve(result.v3_migrated === true);
+    });
+  });
+}
+
+const setMigrationComplete = () => {
+  return new Promise((resolve) => {
+    chrome.storage.local.set({v3_migrated: true}, () => {
+      resolve();
+    });
+  });
+}
+
 module.exports = {
   name: "chromeStorageApi",
   getPacks() {
@@ -168,6 +277,18 @@ module.exports = {
     setOnPacksChanged(callback);
   },
   resetPackr() {
-    resetPackr();
+    return resetPackr();
+  },
+  exportPacks() {
+    return exportPacks();
+  },
+  importPacks({fileContent}) {
+    return importPacks(fileContent);
+  },
+  checkFirstRun() {
+    return checkFirstRun();
+  },
+  setMigrationComplete() {
+    return setMigrationComplete();
   }
 }

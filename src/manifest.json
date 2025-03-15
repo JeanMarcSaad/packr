@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "__MSG_extName__",
   "homepage_url": "http://localhost:8080/",
   "description": "__MSG_extDescription__",
@@ -9,18 +9,15 @@
     "storage",
     "unlimitedStorage"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "icons": {
     "16": "icons/packr_16.png",
     "48": "icons/packr_48.png",
     "128": "icons/packr_128.png"
   },
-  "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
-  },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_title": "__MSG_extName__",
     "default_icon": {

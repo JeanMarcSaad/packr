@@ -22,10 +22,10 @@ const openTab = (url) => {
       });
     });
   }
-  
+
 const popupExtension = () => {
   return new Promise((resolve) => {
-    chrome.tabs.create({'url': chrome.extension.getURL('popup.html')}, () => {
+    chrome.tabs.create({'url': chrome.runtime.getURL('popup.html')}, () => {
       resolve();
     });
   });
